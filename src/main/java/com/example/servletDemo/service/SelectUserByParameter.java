@@ -10,5 +10,6 @@ public class SelectUserByParameter extends HttpServlet {
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response){
 
+        System.out.println("hello git");
     }
 }
