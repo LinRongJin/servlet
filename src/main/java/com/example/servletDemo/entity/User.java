@@ -6,6 +6,13 @@ public class User {
     private String sex;
     private int age;
 
+    public void setUser(int id,String username , String sex,int age){
+        this.id = id;
+        this.username = username;
+        this.age = age;
+        this.sex = sex;
+    }
+
     public int getId() {
         return id;
     }

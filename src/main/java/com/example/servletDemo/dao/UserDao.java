@@ -11,4 +11,5 @@ public interface UserDao {
     public User selectByUsername(String username);
     public List<User> selecteAll();
     public List<User> selectUser(User user);
+    public List<User> getTotal(int start , int num);
 }

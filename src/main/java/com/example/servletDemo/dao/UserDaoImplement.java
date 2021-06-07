@@ -30,7 +30,7 @@ public class UserDaoImplement implements UserDao{
 
     @Override
     public void update(User user) {
-
+        String sql = "update user set ";
     }
 
     @Override
@@ -62,10 +62,8 @@ public class UserDaoImplement implements UserDao{
             User user = null;
             while (resultSet.next()){
                 user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setSex(resultSet.getString("sex"));
-                user.setAge(resultSet.getInt("age"));
+                user.setUser(resultSet.getInt("id"),resultSet.getString("username")
+                        ,resultSet.getString("sex"),resultSet.getInt("age"));
                 userList.add(user);
             }
         } catch (SQLException throwables) {
@@ -93,13 +91,37 @@ public class UserDaoImplement implements UserDao{
         try {
             PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            User user1 = new User();
+            User user1 = null;
             while (resultSet.next()){
-                user1.setAge(resultSet.getInt("age"));
-                user1.setUsername(resultSet.getString("username"));
-                user1.setSex(resultSet.getString("sec"));
-                user1.setId(resultSet.getInt("id"));
+                user = new User();
+                user.setUser(resultSet.getInt("id"),resultSet.getString("username")
+                        ,resultSet.getString("sex"),resultSet.getInt("age"));
                 userList.add(user1);
+                user = null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userList;
+    }
+
+    //paging query
+    @Override
+    public List<User> getTotal(int start, int num) {
+        String sql = "select * from user order by id  limit ? , ?";
+        List<User> userList = new ArrayList<User>();
+        try {
+            PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,start);
+            preparedStatement.setInt(2,num);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            User user = null;
+            while(resultSet.next()){
+                user = new User();
+                user.setUser(resultSet.getInt("id"),resultSet.getString("username")
+                        ,resultSet.getString("sex"),resultSet.getInt("age"));
+                userList.add(user);
+                user = null;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
